@@ -1,0 +1,16 @@
+---
+applications:
+  - instances: 1
+    memory: 768M
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git
+    stack: cflinuxfs2
+    timeout: 180
+    health-check-type: process
+    path: ./target/jdbc_bulk-0.0.1-SNAPSHOT.jar
+    services:
+      - speed-test-rabbit
+      - greenplum
+
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ memory_calculator: { stack_threads: 200 } }'
+      JAVA_OPTS: '-Xss512K'
